@@ -1,12 +1,18 @@
 const express = require("express");
 const { scrapeLogic } = require("./scrapeLogic");
 const app = express();
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+
+// Используйте bodyParser.urlencoded() для парсинга данных формы (например, x-www-form-urlencoded)
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const PORT = process.env.PORT || 4002;
 
-app.get("/scrape", async (req, res) => {
-
-  const pdf = await scrapeLogic(res)
+app.post("/scrape", async (req, res) => {
+  const postData = req.body;
+  const pdf = await scrapeLogic(postData, res)
   res.setHeader('Content-Type', 'application/pdf');
   res.setHeader('Content-Disposition', 'attachment; filename=test.pdf');
   res.send(pdf);
