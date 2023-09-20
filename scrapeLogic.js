@@ -10,7 +10,7 @@ const scrapeLogic = async (postData, res) => {
       period: postData.period,
     })
   } catch (e) {
-    console.log(e);
+    console.log('!!!!!', e);
   }
 
 
