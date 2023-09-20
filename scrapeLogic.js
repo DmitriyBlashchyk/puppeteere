@@ -3,10 +3,16 @@ const axios = require('axios')
 require("dotenv").config();
 
 const scrapeLogic = async (postData, res) => {
-  const request = await axios.post('https://zxvo1ut035.execute-api.us-east-2.amazonaws.com/default/ssr', {
-    projectId: postData.projectId,
-    period: postData.period,
-  })
+
+  try {
+    const request = await axios.post('https://zxvo1ut035.execute-api.us-east-2.amazonaws.com/default/ssr', {
+      projectId: postData.projectId,
+      period: postData.period,
+    })
+  } catch (e) {
+    console.log(e);
+  }
+
 
   const browser = await puppeteer.launch({
     args: [
