@@ -4,24 +4,17 @@ FROM ghcr.io/puppeteer/puppeteer:19.7.2
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
 
-# Создаем non-root пользователя node
-RUN adduser --disabled-password --gecos "" node
+# Создаем non-root пользователя с известными UID и GID
+RUN groupadd -g 1001 node && useradd -r -u 1001 -g node node
 
 WORKDIR /usr/src/app
-
-# Устанавливаем директорию, в которой будут выполняться команды от пользователя node
-RUN chown -R node:node .
-
-# Переключаемся на пользователя node
-USER node
 
 COPY package*.json ./
 
 RUN npm ci
 
-# Переключаемся обратно на пользователя root для запуска приложения
-USER root
-
 COPY . .
+
+USER node
 
 CMD [ "node", "index.js" ]
