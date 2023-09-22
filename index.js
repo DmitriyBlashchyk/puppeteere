@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 // Используйте bodyParser.urlencoded() для парсинга данных формы (например, x-www-form-urlencoded)
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const PORT = process.env.PORT || 4002;
+const PORT = process.env.PORT || 3000;
 
 app.post("/scrape", async (req, res) => {
   const postData = req.body;
